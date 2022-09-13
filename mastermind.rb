@@ -32,8 +32,40 @@ class Mastermind
     ['P', 'P', 'P', 'P'],
     ['N', 'N', 'N', 'N']
   ]
-  def initialize
+  def initialize codebreaker
     intro
     rules
+    code = COLORS.flatten.sample(4)
+    game(code, codebreaker)
+  end
+
+  private
+
+  def game(code, codebreaker)
+    tries = 1
+    while tries <= 12
+      puts "TRY: #{tries}"
+      guess = codebreaker.guess
+      if guess == code
+        puts 'Correct! That is the code'
+        break
+      elsif tries == 12 && guess != code
+        puts "You're out of moves"
+      else
+      puts 'Try Again'
+      end
+      tries += 1
+    end
   end
 end
+
+class Player
+  def guess
+    puts 'What do you think the code is?'
+    guess = gets.chomp.upcase.split('')
+    guess
+  end
+end
+
+codebreaker = Player.new
+Mastermind.new(codebreaker)
