@@ -24,7 +24,7 @@ end
 
 class Mastermind
   include Text
-  COLORS = ['B','O','Y','G','P','N']
+  COLORS = ['B', 'O', 'Y', 'G', 'P', 'N']
   def initialize codebreaker
     intro
     rules
@@ -35,21 +35,43 @@ class Mastermind
 
   def game(codebreaker)
     tries = 1
-    code = COLORS.sample(4)
-    while tries <= 12
-      puts "TRY: #{tries}"
-      guess = codebreaker.guess
-      if guess == code
-        puts 'Correct! That is the code'
-        break
-      elsif tries == 12 && guess != code
-        puts "You're out of moves"
-        puts "The code is #{code}"
-      else
-      puts 'Try Again'
-      puts "CLUE: #{hint(code, guess)}"
+    puts 'Select 1 to be codemaker or 2 to be codebreaker!'
+    response = gets.chomp.to_i
+    if response == 1
+      puts 'Set a 4-color code using the available color options.'
+      code = gets.chomp.upcase.split('')
+      while tries <= 12
+        guess = codebreaker.comp_guess
+        puts "TRY: #{tries}"
+        if guess == code
+          puts 'Correct! That is the code'
+          break
+        elsif tries == 12 && guess != code
+          puts "You're out of moves"
+          puts "The code is #{code}"
+        else
+          puts "Comp's pick: #{guess.join}"
+          puts "CLUE: #{hint(code, guess)}"
+        end
+        tries += 1
       end
-      tries += 1
+    else
+      while tries <= 12
+        puts "TRY: #{tries}"
+        guess = codebreaker.guess
+        code = COLORS.sample(4)
+        if guess == code
+          puts 'Correct! That is the code'
+          break
+        elsif tries == 12 && guess != code
+          puts "You're out of moves"
+          puts "The code is #{code}"
+        else
+        puts 'Try Again'
+        puts "CLUE: #{hint(code, guess)}"
+        end
+        tries += 1
+      end
     end
   end
 
@@ -64,9 +86,15 @@ class Mastermind
 end
 
 class Player
+  COLORS = ['B', 'O', 'Y', 'G', 'P', 'N'] 
   def guess
     puts 'What do you think the code is?'
     guess = gets.chomp.upcase.split('')
+    guess
+  end
+
+  def comp_guess
+    guess = COLORS.sample(4)
     guess
   end
 end
