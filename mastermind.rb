@@ -56,10 +56,10 @@ class Mastermind
         tries += 1
       end
     else
+      code = COLORS.sample(4)
       while tries <= 12
         puts "TRY: #{tries}"
         guess = codebreaker.guess
-        code = COLORS.sample(4)
         if guess == code
           puts 'Correct! That is the code'
           break
@@ -67,8 +67,8 @@ class Mastermind
           puts "You're out of moves"
           puts "The code is #{code}"
         else
-        puts 'Try Again'
-        puts "CLUE: #{hint(code, guess)}"
+          puts 'Try Again'
+          puts "CLUE: #{hint(code, guess)}"
         end
         tries += 1
       end
@@ -86,7 +86,7 @@ class Mastermind
 end
 
 class Player
-  COLORS = ['B', 'O', 'Y', 'G', 'P', 'N'] 
+  COLORS = ['B', 'O', 'Y', 'G', 'P', 'N']
   def guess
     puts 'What do you think the code is?'
     guess = gets.chomp.upcase.split('')
